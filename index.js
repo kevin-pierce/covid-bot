@@ -161,4 +161,5 @@ client.on("message", async message => {
 });
 
 // Login to Discord using the app's token
-client.login("NzA1NDg4MTM2NzM3OTE0OTkx.XqsbYw.TV9pm7oWnwMmfpAWjaRFphREKx4");
+// DON'T BE LIKE ME AND PUSH THIS WITH YOUR TOKEN IN IT LOL
+client.login("lol");
