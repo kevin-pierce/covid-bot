@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const axios = require("axios");
 const client = new Discord.Client();
+const config = require("./config.json");
 
 client.on("ready", () =>{
     console.log("Ready!");
@@ -162,4 +163,4 @@ client.on("message", async message => {
 
 // Login to Discord using the app's token
 // DON'T BE LIKE ME AND PUSH THIS WITH YOUR TOKEN IN IT LOL
-client.login("lol");
+client.login(config.token);
