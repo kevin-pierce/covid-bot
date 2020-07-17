@@ -3,12 +3,14 @@ const axios = require("axios");
 const client = new Discord.Client();
 const config = require("./config.json");
 
+// Discord bot client login
 client.on("ready", () =>{
     console.log("Ready!");
 });
 
 // Set the global prefix for the bot's commands
 let prefix = "!";
+let monthArr = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
 
 client.on("message", async message => {
 
@@ -106,13 +108,15 @@ client.on("message", async message => {
                     return historicDeaths = response.data;
                 }
                 let info = await getHistoricDeaths();
-                console.log(info);
 
                 let deathData = [];
                 let xAxisLabels = [];
                 for (day in info["deaths"]){
-                    xAxisLabels.push(day);
-                    deathData.push(info["deaths"][`${day}`])   
+                    let tempDate = new Date(day);
+                    console.log(tempDate.toString());
+                    //xAxisLabels.push(monthArr[tempDate.getMonth()] + "\s" + tempDate.getDate());
+                    xAxisLabels.push((tempDate.getDate() + "/" + tempDate.getMonth()).toString());
+                    deathData.push(info["deaths"][`${day}`])
                 }
                 console.log(xAxisLabels);
                 console.log(deathData);
@@ -133,7 +137,7 @@ client.on("message", async message => {
                 const historicDeathEmbed = new Discord.MessageEmbed()
                     .setColor("#990000")
                     .setTitle("Historic Deaths for Past 30 Days")
-                    .setImage(`https://quickchart.io/chart?c={${graphConfig}}`)
+                    .setImage(`https://quickchart.io/chart?c={type:'line',data:{labels:[${xAxisLabels}],datasets:[{label:'Deaths',data:[${deathData}],fill:false,borderColor:"red",pointBackgroundColor:"red"}]}}`)
 
                 // for (day in info["deaths"]) {
                 //     botMsg += (day + ": " + info["deaths"][`${day}`] + " \n");

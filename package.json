@@ -13,6 +13,7 @@
     "axios": "^0.19.2",
     "chart.js": "^2.9.3",
     "discord.js": "^12.2.0",
+    "moment": "^2.27.0",
     "novelcovid": "^1.2.7"
   }
 }
