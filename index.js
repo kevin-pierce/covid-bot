@@ -98,8 +98,9 @@ client.on("message", async message => {
         }
 
         else if (args[0] === "historic" || args[0] === "hs") {
-            let botMsg = "";
+
             if (args.length == 1) {
+
                 let getHistoricDeaths = async () => {
                     let response = await axios.get("https://corona.lmao.ninja/v2/historical/all");
                     return historicDeaths = response.data;
@@ -111,8 +112,10 @@ client.on("message", async message => {
                 let xAxisLabels = [];
                 for (day in info["deaths"]){
                     xAxisLabels.push(day);
-                    deathData.push(info["deaths"][`${day}`])
+                    deathData.push(info["deaths"][`${day}`])   
                 }
+                console.log(xAxisLabels);
+                console.log(deathData);
                 // Generate Graph!
                 let graphConfig = {
                     type: "line",
@@ -127,23 +130,16 @@ client.on("message", async message => {
                     }
                 }
 
-                let getGraph = async () => {
-                    let graph;
-                    graph = await axios.get("https://quickchart.io/chart?c={type:'bar',data:{labels:[2012,2013,2014,2015,2016],datasets:[{label:'Users',data:[120,60,50,180,120]}]}}")
-                                           .then((response) => {
-                                               console.log(response.status);
-                                               return graph;
-                                           });
-                }
+                const historicDeathEmbed = new Discord.MessageEmbed()
+                    .setColor("#990000")
+                    .setTitle("Historic Deaths for Past 30 Days")
+                    .setImage(`https://quickchart.io/chart?c={${graphConfig}}`)
 
-                let myGraph = await getGraph();
-
-                for (day in info["deaths"]) {
-                    botMsg += (day + ": " + info["deaths"][`${day}`] + " \n");
-                }
+                // for (day in info["deaths"]) {
+                //     botMsg += (day + ": " + info["deaths"][`${day}`] + " \n");
+                // }
                 //return message.channel.send(`Here are the statistics for the past 30 days: ${botMsg}`);
-                return message.channel.send('myGraph');
-                
+                return message.channel.send(historicDeathEmbed);
             }
         }
     }
