@@ -96,16 +96,13 @@ module.exports = {
         
                         let deathData = [];
                         let xAxisLabels = [];
-        
-                        // Must refactor dates later
+
+                        // Format x-axis labels and compile data to be used on graph
                         for (day in info["deaths"]){
-                            let tempDate = new Date(day);
-                            //xAxisLabels.push((monthArr[tempDate.getMonth().toString()] + tempDate.getDate().toString()));
-                            xAxisLabels.push((tempDate.getDate() + "/" + tempDate.getMonth()).toString());
+                            xAxisLabels.push("\"" + day + "\"");
                             deathData.push(info["deaths"][`${day}`])
                         }
                         console.log(xAxisLabels);
-                        console.log(deathData);
         
                         // Create a new embedded message for the bot to display the historic deaths
                         const historicDeathEmbed = new Discord.MessageEmbed()
@@ -113,11 +110,6 @@ module.exports = {
                             .setTitle("Historic Deaths for Past 30 Days")
                             .setImage(`https://quickchart.io/chart?c={type:'line',data:{labels:[${xAxisLabels}],datasets:[{label:'Deaths',data:[${deathData}],fill:false,borderColor:"red",pointBackgroundColor:"red"}]}}`)
 
-        
-                        // for (day in info["deaths"]) {
-                        //     botMsg += (day + ": " + info["deaths"][`${day}`] + " \n");
-                        // }
-                        //return message.channel.send(`Here are the statistics for the past 30 days: ${botMsg}`);
                         return message.channel.send(historicDeathEmbed);
                     }
                 }
