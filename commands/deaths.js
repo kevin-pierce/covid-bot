@@ -1,4 +1,5 @@
 const axios = require("axios");
+const Discord = require("discord.js");
 
 module.exports = {
     name: "deaths",
@@ -82,7 +83,7 @@ module.exports = {
                         message.channel.send(`Yesterday, ${totalYTDDeathsCountry} people died in ${info["country"]}.`);
                     }
                 }
-        
+                // The user specifies their search for YESTERDAY (This argument returns a GRAPH)
                 else if (args[0] === "historic" || args[0] === "hs") {
         
                     if (args.length == 1) {
@@ -99,7 +100,8 @@ module.exports = {
                         // Must refactor dates later
                         for (day in info["deaths"]){
                             let tempDate = new Date(day);
-                            xAxisLabels.push((monthArr[tempDate.getMonth().toString()] + tempDate.getDate().toString()));
+                            //xAxisLabels.push((monthArr[tempDate.getMonth().toString()] + tempDate.getDate().toString()));
+                            xAxisLabels.push((tempDate.getDate() + "/" + tempDate.getMonth()).toString());
                             deathData.push(info["deaths"][`${day}`])
                         }
                         console.log(xAxisLabels);
@@ -109,7 +111,8 @@ module.exports = {
                         const historicDeathEmbed = new Discord.MessageEmbed()
                             .setColor("#990000")
                             .setTitle("Historic Deaths for Past 30 Days")
-                            .setImage(`https://quickchart.io/chart?c={type:'line',data:{datasets:[{label:'Deaths',data:[{x:${xAxisLabels},y:${deathData}}],fill:false,borderColor:"red",pointBackgroundColor:"red"}]},options:{scales:{xAxes:[{type:'time',distribution:'series',time:{unit:'day'}}]}}}`)
+                            .setImage(`https://quickchart.io/chart?c={type:'line',data:{labels:[${xAxisLabels}],datasets:[{label:'Deaths',data:[${deathData}],fill:false,borderColor:"red",pointBackgroundColor:"red"}]}}`)
+
         
                         // for (day in info["deaths"]) {
                         //     botMsg += (day + ": " + info["deaths"][`${day}`] + " \n");
