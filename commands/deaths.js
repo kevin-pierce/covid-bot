@@ -86,6 +86,7 @@ module.exports = {
                 // The user specifies their search for YESTERDAY (This argument returns a GRAPH)
                 else if (args[0] === "historic" || args[0] === "hs") {
         
+                    // No specification on how far back the data goes (Simply 30 days)
                     if (args.length == 1) {
         
                         let getHistoricDeaths = async () => {
@@ -108,7 +109,39 @@ module.exports = {
                         const historicDeathEmbed = new Discord.MessageEmbed()
                             .setColor("#990000")
                             .setTitle("Historic Deaths for Past 30 Days")
-                            .setImage(`https://quickchart.io/chart?c={type:'line',data:{labels:[${xAxisLabels}],datasets:[{label:'Deaths',data:[${deathData}],fill:false,borderColor:"red",pointBackgroundColor:"red"}]}}`)
+                            .setImage(`https://quickchart.io/chart?width=500&height=350&c={type:'line',data:{labels:[${xAxisLabels}],datasets:[{label:'Deaths',data:[${deathData}],fill:false,borderColor:"red",pointBackgroundColor:"red"}]},options:{legend:{labels:{fontColor:"white",fontSize:18}},scales:{yAxes:[{ticks:{fontColor:"white",beginAtZero:false,fontSize:16}}],xAxes:[{ticks:{fontColor:"white",fontSize:16}}]}}}`)
+
+                        return message.channel.send(historicDeathEmbed);
+                    }
+                    // Country specific historic deaths
+                    else if (args.length == 2) {
+                        let countryName = args.slice(1).join(" ");
+                        console.log(countryName);
+
+                        let getCountryHistoricDeaths = async () => {
+                            let response = await axios.get("https://corona.lmao.ninja/v2/historical/" + countryName + "?lastdays=30").catch(err =>{
+                                if (err.response){
+                                    message.channel.send(`<@${message.author.id}> - Please enter a valid country.`)
+                                }
+                            });
+                            return data = response.data;
+                        }
+                        let historicCountryDeaths = await getCountryHistoricDeaths();
+                        
+                        let countryDeathData = [];
+                        let xAxisLabels = [];
+
+                        // Format x-axis labels and compile data to be used on graph
+                        for (day in historicCountryDeaths["timeline"]["deaths"]){
+                            xAxisLabels.push("\"" + day + "\"");
+                            countryDeathData.push(historicCountryDeaths["timeline"]["deaths"][`${day}`])
+                        }
+                        
+                        // Create a new embedded message for the bot to display the Country-specific historic deaths
+                        const historicDeathEmbed = new Discord.MessageEmbed()
+                            .setColor("#990000")
+                            .setTitle(`Historic Deaths for Past 30 Days in ${historicCountryDeaths["country"]}`)
+                            .setImage(`https://quickchart.io/chart?width=500&height=350&c={type:'line',data:{labels:[${xAxisLabels}],datasets:[{label:'Deaths',data:[${countryDeathData}],fill:false,borderColor:"red",pointBackgroundColor:"red"}]},options:{legend:{labels:{fontColor:"white",fontSize:18}},scales:{yAxes:[{ticks:{fontColor:"white",beginAtZero:false,fontSize:16}}],xAxes:[{ticks:{fontColor:"white",fontSize:16}}]}}}`)
 
                         return message.channel.send(historicDeathEmbed);
                     }
