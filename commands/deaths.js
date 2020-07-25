@@ -19,7 +19,6 @@ module.exports = {
                 else if (args[0] === "today" || args[0] === "td") {
                     // Global deaths TODAY
                     if (args.length == 1) {
-                        let totalTodayDeaths = 0;
                         let getDeaths = async () => {
                             let response = await axios.get("https://corona.lmao.ninja/v2/all?yesterday=false");
                             let deaths = response.data;
