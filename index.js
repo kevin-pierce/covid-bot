@@ -23,7 +23,7 @@ client.on("message", async message => {
     // Do nothing if the message does not start with the command prefix, or the bot is sending the message
     if (!message.content.startsWith(config.prefix) || message.author.bot) return;
     // Isolate command and args
-    const args = message.content.slice(config.prefix.length).split(/ +/);
+    const args = message.content.toLowerCase().slice(config.prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
 
     if (command === "deaths") {
