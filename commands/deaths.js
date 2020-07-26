@@ -5,7 +5,7 @@ module.exports = {
     name: "deaths",
     description: "Provides daily-updated data on COVID-19 related deaths globally",
     async execute(message, args){
-                // Display the total global deaths due to COVID-19 thus far
+                // Global death cases TOTAL
                 if (!args.length) {
                     let getTotalDeaths = async () => {
                         let response = await axios.get("https://corona.lmao.ninja/v2/all?yesterday=false");
