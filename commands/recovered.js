@@ -97,7 +97,7 @@ module.exports = {
                 const historicRecoveriesEmbed = new Discord.MessageEmbed()
                     .setColor("#990000")
                     .setTitle("COVID-19 Recoveries for the Past 30 Days Globally")
-                    .setImage(`https://quickchart.io/chart?width=500&height=350&c={type:'line',data:{labels:[${xAxisLabels}],datasets:[{label:'Recoveries',data:[${recoveryData}],fill:false,borderColor:"blue",pointBackgroundColor:"blue"}]},options:{legend:{labels:{fontColor:"white",fontSize:18}},scales:{yAxes:[{ticks:{fontColor:"white",beginAtZero:false,fontSize:16}}],xAxes:[{ticks:{fontColor:"white",fontSize:16}}]}}}`)
+                    .setImage(`https://quickchart.io/chart?width=500&height=350&c={type:'line',data:{labels:[${xAxisLabels}],datasets:[{label:'Recoveries',data:[${recoveryData}],fill:false,borderColor:"rgb(30,144,255)",pointBackgroundColor:"rgb(30,144,255)"}]},options:{legend:{labels:{fontColor:"white",fontSize:18}},scales:{yAxes:[{ticks:{fontColor:"white",beginAtZero:false,fontSize:16}}],xAxes:[{ticks:{fontColor:"white",fontSize:16}}]}}}`)
 
                 return message.channel.send(historicRecoveriesEmbed);
             }
@@ -130,7 +130,7 @@ module.exports = {
                 const historicRecoveredEmbed = new Discord.MessageEmbed()
                     .setColor("#990000")
                     .setTitle(`Historic Deaths for the Past 30 Days in ${historicCountryRecoveries["country"]}`)
-                    .setImage(`https://quickchart.io/chart?width=500&height=350&c={type:'line',data:{labels:[${xAxisLabels}],datasets:[{label:'Recoveries',data:[${countryRecoveryData}],fill:false,borderColor:"blue",pointBackgroundColor:"blue"}]},options:{legend:{labels:{fontColor:"white",fontSize:18}},scales:{yAxes:[{ticks:{fontColor:"white",beginAtZero:false,fontSize:16}}],xAxes:[{ticks:{fontColor:"white",fontSize:16}}]}}}`)
+                    .setImage(`https://quickchart.io/chart?width=500&height=350&c={type:'line',data:{labels:[${xAxisLabels}],datasets:[{label:'Recoveries',data:[${countryRecoveryData}],fill:false,borderColor:"rgb(30,144,255)",pointBackgroundColor:"rgb(30,144,255)"}]},options:{legend:{labels:{fontColor:"white",fontSize:18}},scales:{yAxes:[{ticks:{fontColor:"white",beginAtZero:false,fontSize:16}}],xAxes:[{ticks:{fontColor:"white",fontSize:16}}]}}}`)
 
                 return message.channel.send(historicRecoveredEmbed);
             }
@@ -142,13 +142,13 @@ module.exports = {
                 console.log(numDays);
 
                 if (numDays > 100) {
-                    return message.channel.send(`<@${message.author.id}> - I can only display data from up to the past 100 days.`)
+                    return message.channel.send(`<@${message.author.id}> - I can only display data from up to the past 100 days.`);
                 }
                 else {
                     let getCountryHistoricRecoveries = async () => {
                         let response = await axios.get("https://corona.lmao.ninja/v2/historical/" + countryName + "?lastdays=" + numDays).catch(err =>{
                             if (err.response){
-                                return message.channel.send(`<@${message.author.id}> - Please enter a valid country.`)
+                                return message.channel.send(`<@${message.author.id}> - Please enter a valid country.`);
                             }
                         });
                         return data = response.data;
@@ -168,7 +168,7 @@ module.exports = {
                     const historicRecoveriesEmbed = new Discord.MessageEmbed()
                         .setColor("#990000")
                         .setTitle(`Historic Recoveries for the Past ${numDays} Days in ${historicCountryRecoveries["country"]}`)
-                        .setImage(`https://quickchart.io/chart?width=500&height=350&c={type:'line',data:{labels:[${xAxisLabels}],datasets:[{label:'Recoveries',data:[${countryRecoveryData}],fill:false,borderColor:"blue",pointBackgroundColor:"blue"}]},options:{legend:{labels:{fontColor:"white",fontSize:18}},scales:{yAxes:[{ticks:{fontColor:"white",beginAtZero:false,fontSize:16}}],xAxes:[{ticks:{fontColor:"white",fontSize:16}}]}}}`)
+                        .setImage(`https://quickchart.io/chart?width=500&height=350&c={type:'line',data:{labels:[${xAxisLabels}],datasets:[{label:'Recoveries',data:[${countryRecoveryData}],fill:false,borderColor:"rgb(30,144,255)",pointBackgroundColor:"rgb(30,144,255)"}]},options:{legend:{labels:{fontColor:"white",fontSize:18}},scales:{yAxes:[{ticks:{fontColor:"white",beginAtZero:false,fontSize:16}}],xAxes:[{ticks:{fontColor:"white",fontSize:16}}]}}}`)
     
                     return message.channel.send(historicRecoveriesEmbed);
                 }                
