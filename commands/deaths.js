@@ -15,7 +15,7 @@ module.exports = {
                     let totalDeaths = await getTotalDeaths();
                     return message.channel.send(`Globally, ${totalDeaths["deaths"]} people have died due to COVID-19.`);
                 }
-                // The user narrows their search for TODAY
+                // Data for TODAY
                 else if (args[0] === "today" || args[0] === "td") {
                     // Global deaths TODAY
                     if (args.length == 1) {
@@ -82,7 +82,7 @@ module.exports = {
                         message.channel.send(`Yesterday, ${totalYTDDeathsCountry} people died in ${info["country"]}.`);
                     }
                 }
-                // The user specifies their search for YESTERDAY (This argument returns a GRAPH)
+                // Data HISTORICALLY (This argument returns a GRAPH)
                 else if (args[0] === "historic" || args[0] === "hs") {
         
                     // No specification on how far back the data goes (Simply 30 days)
