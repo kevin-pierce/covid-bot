@@ -151,32 +151,37 @@ module.exports = {
                         console.log(countryName);
                         console.log(numDays);
 
-                        let getCountryHistoricDeaths = async () => {
-                            let response = await axios.get("https://corona.lmao.ninja/v2/historical/" + countryName + "?lastdays=" + numDays).catch(err =>{
-                                if (err.response){
-                                    message.channel.send(`<@${message.author.id}> - Please enter a valid country.`)
-                                }
-                            });
-                            return data = response.data;
+                        if (numDays > 100) {
+                            return message.channel.send(`<@${message.author.id}> - I can only display data from up to the past 100 days.`);
                         }
-                        let historicCountryDeaths = await getCountryHistoricDeaths();
-                        
-                        let countryDeathData = [];
-                        let xAxisLabels = [];
-
-                        // Format x-axis labels and compile data to be used on graph
-                        for (day in historicCountryDeaths["timeline"]["deaths"]){
-                            xAxisLabels.push("\"" + day + "\"");
-                            countryDeathData.push(historicCountryDeaths["timeline"]["deaths"][`${day}`])
-                        }
-                        
-                        // Create a new embedded message for the bot to display the Country-specific historic deaths
-                        const historicDeathEmbed = new Discord.MessageEmbed()
-                            .setColor("#990000")
-                            .setTitle(`Historic Deaths for the Past ${numDays} Days in ${historicCountryDeaths["country"]}`)
-                            .setImage(`https://quickchart.io/chart?width=500&height=350&c={type:'line',data:{labels:[${xAxisLabels}],datasets:[{label:'Deaths',data:[${countryDeathData}],fill:false,borderColor:"red",pointBackgroundColor:"red"}]},options:{legend:{labels:{fontColor:"white",fontSize:18}},scales:{yAxes:[{ticks:{fontColor:"white",beginAtZero:false,fontSize:16}}],xAxes:[{ticks:{fontColor:"white",fontSize:16}}]}}}`)
-
-                        return message.channel.send(historicDeathEmbed);
+                        else {
+                            let getCountryHistoricDeaths = async () => {
+                                let response = await axios.get("https://corona.lmao.ninja/v2/historical/" + countryName + "?lastdays=" + numDays).catch(err =>{
+                                    if (err.response){
+                                        message.channel.send(`<@${message.author.id}> - Please enter a valid country.`)
+                                    }
+                                });
+                                return data = response.data;
+                            }
+                            let historicCountryDeaths = await getCountryHistoricDeaths();
+                            
+                            let countryDeathData = [];
+                            let xAxisLabels = [];
+    
+                            // Format x-axis labels and compile data to be used on graph
+                            for (day in historicCountryDeaths["timeline"]["deaths"]){
+                                xAxisLabels.push("\"" + day + "\"");
+                                countryDeathData.push(historicCountryDeaths["timeline"]["deaths"][`${day}`])
+                            }
+                            
+                            // Create a new embedded message for the bot to display the Country-specific historic deaths
+                            const historicDeathEmbed = new Discord.MessageEmbed()
+                                .setColor("#990000")
+                                .setTitle(`Historic Deaths for the Past ${numDays} Days in ${historicCountryDeaths["country"]}`)
+                                .setImage(`https://quickchart.io/chart?width=500&height=350&c={type:'line',data:{labels:[${xAxisLabels}],datasets:[{label:'Deaths',data:[${countryDeathData}],fill:false,borderColor:"red",pointBackgroundColor:"red"}]},options:{legend:{labels:{fontColor:"white",fontSize:18}},scales:{yAxes:[{ticks:{fontColor:"white",beginAtZero:false,fontSize:16}}],xAxes:[{ticks:{fontColor:"white",fontSize:16}}]}}}`)
+    
+                            return message.channel.send(historicDeathEmbed);
+                        } 
                     }
                 }
             }
