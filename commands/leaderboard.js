@@ -28,9 +28,29 @@ module.exports = {
             leadingDeaths.sort(compareDeaths);
             leadingRecoveries.sort(compareRecoveries);
             leadingCases.sort(compareCases);
+
+            const leadingEmbed = new Discord.MessageEmbed()
+                .setColor("#990000")
+                .setTitle("Global COVID-19 Stats")
+                .addField("Most Deaths", formatData(leadingDeaths), true);
+            
+            // for (let countryNum = 0; countryNum < 9; countryNum++){
+            //     `${leadingDeaths[countryNum]["country"]}:${leadingDeaths[countryNum]["deaths"]}`, true);
+            // }
+
+            return message.channel.send(leadingEmbed);
         }
     }
 }
+
+let formatData = (arr) => {
+    let msg = ``;
+
+    for (let countryNum = 0; countryNum < 10; countryNum++){
+        msg += `${countryNum + 1}: ${arr[countryNum]["country"]}  :flag_${arr[countryNum]["countryInfo"]["iso2"].toLowerCase()}::   ${arr[countryNum]["deaths"]}\n`
+    }
+    return msg;
+} 
 
 let compareDeaths = (a, b) => {
     // Use toUpperCase() to ignore character casing
