@@ -13,6 +13,7 @@ module.exports = {
                         return deaths;
                     }
                     let totalDeaths = await getTotalDeaths();
+                    console.log(totalDeaths);
                     return message.channel.send(`Globally, ${totalDeaths["deaths"]} people have died due to COVID-19.`);
                 }
                 // Data for TODAY

@@ -29,9 +29,11 @@ client.on("message", async message => {
     if (command === "deaths") {
         client.commands.get("deaths").execute(message, args);
     }
-    // Show stats on the number of recovered
     else if (command === "recovered") {
         client.commands.get("recovered").execute(message, args);
+    }
+    else if (command === "leaderboard") {
+        client.commands.get("leaderboard").execute(message, args);
     }
 });
 
