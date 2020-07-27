@@ -174,5 +174,8 @@ module.exports = {
                 }                
             }
         }
+        else {
+            return message.channel.send(`<@${message.author.id}> - Please enter a valid argument. Type !covhelp for help with commands.`);
+        }
     }
 }
