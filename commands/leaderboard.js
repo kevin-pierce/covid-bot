@@ -27,7 +27,7 @@ module.exports = {
             }
             // Sort the arrays
             leadingDeaths.sort(compareDeaths);
-            leadingRecoveries.sort(compareRecoveries);
+            leadingRecoveries.sort(compareRecovered);
             leadingCases.sort(compareCases);
 
             // Create the formatted embedded message
@@ -67,7 +67,7 @@ let compareDeaths = (a, b) => {
     return comparison;
 }
 
-let compareRecoveries = (a, b) => {
+let compareRecovered= (a, b) => {
     // Use toUpperCase() to ignore character casing
     const countryA = a["recovered"]
     const countryB = b["recovered"]

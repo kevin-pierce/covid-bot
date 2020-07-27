@@ -35,6 +35,9 @@ client.on("message", async message => {
     else if (command === "leaderboard") {
         client.commands.get("leaderboard").execute(message, args);
     }
+    else if (command === "covhelp"){
+        client.commands.get("covhelp").execute(message, args);
+    }
 });
 
 // Login to Discord using the app's token

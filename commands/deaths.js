@@ -17,7 +17,7 @@ module.exports = {
                     return message.channel.send(`Globally, ${totalDeaths["deaths"]} people have died due to COVID-19.`);
                 }
                 // Data for TODAY
-                else if (args[0] === "today" || args[0] === "td") {
+                else if (args.length <= 2 && (args[0] === "today" || args[0] === "td")) {
                     // Global deaths TODAY
                     if (args.length == 1) {
                         let getDeaths = async () => {
@@ -28,7 +28,7 @@ module.exports = {
                         let info = await getDeaths();
                         
                         console.log(info["todayDeaths"]);
-                        message.channel.send(`Today, ${info["todayDeaths"]} people have died.`);
+                        message.channel.send(`Today, ${info["todayDeaths"]} people have died due to COVID-19.`);
                     }
                     // Country-specific deaths TODAY
                     else if (args.length >= 2) {
@@ -47,7 +47,7 @@ module.exports = {
                         totalTodayDeathsCountry = info["todayDeaths"];
                         
                         console.log(totalTodayDeathsCountry);
-                        message.channel.send(`Today, ${totalTodayDeathsCountry} people have died.`);
+                        message.channel.send(`Today, ${totalTodayDeathsCountry} people have died due to COVID-19 in ${info["country"]}.`);
                     }
                 }
                 // The user specifies their search for YESTERDAY
@@ -61,7 +61,7 @@ module.exports = {
                         let info = await getDeaths();
                         
                         console.log(info["todayDeaths"]);
-                        message.channel.send(`Yesterday, ${info["todayDeaths"]} people died.`);
+                        message.channel.send(`Yesterday, ${info["todayDeaths"]} people died due to COVID-19.`);
                     }
                     // Country-specific deaths YESTERDAY
                     else if (args.length >= 2) {
@@ -80,7 +80,7 @@ module.exports = {
                         totalYTDDeathsCountry = info["todayDeaths"];
                         
                         console.log(totalYTDDeathsCountry);
-                        message.channel.send(`Yesterday, ${totalYTDDeathsCountry} people died in ${info["country"]}.`);
+                        message.channel.send(`Yesterday, ${totalYTDDeathsCountry} people died due to COVID-19 in ${info["country"]}.`);
                     }
                 }
                 // Data HISTORICALLY (This argument returns a GRAPH)
