@@ -51,7 +51,7 @@ module.exports = {
                     { name: "```" + "!recovered [historic/hs] [number of days] [country name]" + "```", value: 'Returns graph of historical recovery numbers for the past [number of days] in specified country'}
                     );
 
-                return message.channel.send(deathHelpEmbed);
+                return message.channel.send(recoveredHelpEmbed);
             }
             else if (args[0] === "cases"){
                 // do something

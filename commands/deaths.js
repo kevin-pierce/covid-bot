@@ -32,7 +32,6 @@ module.exports = {
                     }
                     // Country-specific deaths TODAY
                     else if (args.length >= 2) {
-                        let totalTodayDeathsCountry = 0;
                         let country = args.slice(1).join(" ");
         
                         let getDeaths = async () => {
@@ -44,7 +43,7 @@ module.exports = {
                             return deaths = response.data;
                         }
                         let info = await getDeaths();
-                        totalTodayDeathsCountry = info["todayDeaths"];
+                        let totalTodayDeathsCountry = info["todayDeaths"];
                         
                         console.log(totalTodayDeathsCountry);
                         message.channel.send(`Today, ${totalTodayDeathsCountry} people have died due to COVID-19 in ${info["country"]}.`);
@@ -65,7 +64,6 @@ module.exports = {
                     }
                     // Country-specific deaths YESTERDAY
                     else if (args.length >= 2) {
-                        let totalYTDDeathsCountry = 0;
                         let country = args.slice(1).join(" ");
         
                         let getDeaths = async () => {
@@ -77,13 +75,13 @@ module.exports = {
                             return deaths = response.data;
                         }
                         let info = await getDeaths();
-                        totalYTDDeathsCountry = info["todayDeaths"];
+                        let totalYTDDeathsCountry = info["todayDeaths"];
                         
                         console.log(totalYTDDeathsCountry);
                         message.channel.send(`Yesterday, ${totalYTDDeathsCountry} people died due to COVID-19 in ${info["country"]}.`);
                     }
                     else {
-                        return message.channel.send(`<@${message.author.id}> - Too many arguments. Please type !covhelp for help with commands.`);
+                        return message.channel.send(`<@${message.author.id}> - Invalid arguments. Please type !covhelp for help with commands.`);
                     }
                 }
                 // Data HISTORICALLY (This argument returns a GRAPH)
@@ -201,15 +199,9 @@ module.exports = {
     
                             return message.channel.send(historicDeathEmbed);
                         } 
-                    }
-                    else {
-                        return message.channel.send(`<@${message.author.id}> - Command syntax is !deaths historic [number of days] [name of country]`);
-                    }
-                }
-                else {
+                    } else 
+                        return message.channel.send(`<@${message.author.id}> - Command syntax is ` + "```" + "!deaths [historic/hs] [number of days] [name of country]" + "```");
+                } else 
                     return message.channel.send(`<@${message.author.id}> - Please enter a valid argument. Type !covhelp for help with commands.`);
-                }
             }
         }
-
-        let numberRegex = /^\d+$/;

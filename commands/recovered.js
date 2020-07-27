@@ -26,19 +26,21 @@ module.exports = {
                 return message.channel.send(`Today, ${todayRecovered["todayRecovered"]} people have recovered from COVID-19.`);
             }
             // Country-specific recovered cases TODAY
-            else if (args.length == 2){
+            else if (args.length >= 2){
                 let country = args.slice(1).join(" ");
-                        let getTodayRecoveredCountry = async () => {
-                            let response = await axios.get("https://corona.lmao.ninja/v2/countries/" + country + "?yesterday=false&strict=true&query").catch(err =>{
-                                if (err.response){
-                                    message.channel.send(`<@${message.author.id}> - Please enter a valid country.`)
-                                }
-                            });
-                            return data = response.data;
+
+                let getTodayRecoveredCountry = async () => {
+                    let response = await axios.get("https://corona.lmao.ninja/v2/countries/" + country + "?yesterday=false&strict=true&query").catch(err =>{
+                        if (err.response){
+                            message.channel.send(`<@${message.author.id}> - Please enter a valid country.`)
                         }
-                        let todayRecoveredCountry = await getTodayRecoveredCountry();
-                        console.log(todayRecoveredCountry);
-                        return message.channel.send(`Today, ${todayRecoveredCountry["todayRecovered"]} people have recovered from COVID-19 in ${todayRecoveredCountry["country"]}.`);
+                    });
+                    return data = response.data;
+                }
+
+                let todayRecoveredCountry = await getTodayRecoveredCountry();
+                console.log(todayRecoveredCountry);
+                return message.channel.send(`Today, ${todayRecoveredCountry["todayRecovered"]} people have recovered from COVID-19 in ${todayRecoveredCountry["country"]}.`);
             }
         }
         // Data for YESTERDAY
@@ -71,6 +73,9 @@ module.exports = {
                 console.log(totalYTDCountryRecovered["todayRecovered"]);
                 message.channel.send(`Yesterday, ${totalYTDCountryRecovered["todayRecovered"]} people recovered from COVID-19 in ${totalYTDCountryRecovered["country"]}.`);
             }
+            else {
+                return message.channel.send(`<@${message.author.id}> - Invalid arguments. Please type !covhelp for help with commands.`);
+            }
         }
         // Data HISTORICALLY (This argument returns a GRAPH)
         else if (args[0] === "historic" || args[0] === "hs") {
@@ -101,49 +106,68 @@ module.exports = {
 
                 return message.channel.send(historicRecoveriesEmbed);
             }
-            // Country specific historic recoveries
-            else if (args.length == 2) {
-                let countryName = args.slice(1).join(" ");
-                console.log(countryName);
+            // Global recoveries historically for a specified number of days
+            else if (args.length == 2 && typeof(parseFloat(args[1])) === 'number') {
+                //let countryName = args.slice(1).join(" ");
+                //console.log(countryName);
 
-                let getCountryHistoricRecoveries = async () => {
-                    let response = await axios.get("https://corona.lmao.ninja/v2/historical/" + countryName + "?lastdays=30").catch(err =>{
-                        if (err.response){
-                            message.channel.send(`<@${message.author.id}> - Please enter a valid country.`)
-                        }
-                    });
-                    return data = response.data;
+                let numDays = args[1];
+
+                // Input validation - the number of days must be an integer between 2 and 100, inclusive
+                if (!Number.isInteger(parseFloat(numDays)))
+                    return message.channel.send(`<@${message.author.id}> - Number of days must be a valid integer.`);
+                else if (numDays > 100)
+                    return message.channel.send(`<@${message.author.id}> - I can only display data from up to the past 100 days.`);
+                else if (numDays < 2)
+                    return message.channel.send(`<@${message.author.id}> - The number of days specified must be at least 2.`);
+                else {
+
+                    let getDayHistoricRecoveries = async () => {
+                        let response = await axios.get("https://corona.lmao.ninja/v2/historical/all?lastdays=" + numDays).catch(err =>{
+                            if (err.response){
+                                message.channel.send(`<@${message.author.id}> - error`)
+                            }
+                        });
+                        return data = response.data;
+                    }
+                    let historicDayRecoveries = await getDayHistoricRecoveries();
+                    
+                    let dayRecoveryData = [];
+                    let xAxisLabels = [];
+
+                    // // Format x-axis labels and compile data to be used on graph
+                    // for (day in historicCountryRecoveries["timeline"]["recovered"]){
+                    //     xAxisLabels.push("\"" + day + "\"");
+                    //     countryRecoveryData.push(historicCountryRecoveries["timeline"]["recovered"][`${day}`])
+                    //     console.log(countryRecoveryData);
+                    // }
+
+                    // Format x-axis labels and compile data to be used on graph
+                    for (day in historicDayRecoveries["recovered"]){
+                        xAxisLabels.push("\"" + day + "\"");
+                        dayRecoveryData.push(historicDayRecoveries["recovered"][`${day}`])
+                    }
+                    
+                    // Create a new embedded message for the bot to display the Country-specific historic recoveries
+                    const historicRecoveredEmbed = new Discord.MessageEmbed()
+                        .setColor("#990000")
+                        .setTitle(`Historic Deaths for the Past ${numDays} Days Globally`)
+                        .setImage(`https://quickchart.io/chart?width=500&height=350&c={type:'line',data:{labels:[${xAxisLabels}],datasets:[{label:'Recoveries',data:[${dayRecoveryData}],fill:false,borderColor:"rgb(30,144,255)",pointBackgroundColor:"rgb(30,144,255)"}]},options:{legend:{labels:{fontColor:"white",fontSize:18}},scales:{yAxes:[{ticks:{fontColor:"white",beginAtZero:false,fontSize:16}}],xAxes:[{ticks:{fontColor:"white",fontSize:16}}]}}}`)
+
+                    return message.channel.send(historicRecoveredEmbed);
                 }
-                let historicCountryRecoveries = await getCountryHistoricRecoveries();
-                
-                let countryRecoveryData = [];
-                let xAxisLabels = [];
-
-                // Format x-axis labels and compile data to be used on graph
-                for (day in historicCountryRecoveries["timeline"]["recovered"]){
-                    xAxisLabels.push("\"" + day + "\"");
-                    countryRecoveryData.push(historicCountryRecoveries["timeline"]["recovered"][`${day}`])
-                    console.log(countryRecoveryData);
-                }
-                
-                // Create a new embedded message for the bot to display the Country-specific historic recoveries
-                const historicRecoveredEmbed = new Discord.MessageEmbed()
-                    .setColor("#990000")
-                    .setTitle(`Historic Deaths for the Past 30 Days in ${historicCountryRecoveries["country"]}`)
-                    .setImage(`https://quickchart.io/chart?width=500&height=350&c={type:'line',data:{labels:[${xAxisLabels}],datasets:[{label:'Recoveries',data:[${countryRecoveryData}],fill:false,borderColor:"rgb(30,144,255)",pointBackgroundColor:"rgb(30,144,255)"}]},options:{legend:{labels:{fontColor:"white",fontSize:18}},scales:{yAxes:[{ticks:{fontColor:"white",beginAtZero:false,fontSize:16}}],xAxes:[{ticks:{fontColor:"white",fontSize:16}}]}}}`)
-
-                return message.channel.send(historicRecoveredEmbed);
             }
             // Country specific historic recoveries for certain days
-            else if (args.length == 3) {
-                let countryName = args.slice(1,2).join(" ");
-                let numDays = args.slice(2).join(" ");
-                console.log(countryName);
-                console.log(numDays);
+            else if (args.length >= 3 && typeof(parseFloat(args[1]) === 'number') && /^[a-zA-Z\s]*$/i.test(args.slice(2).join(" "))) {
+                let countryName = args.slice(2).join(" ");
+                let numDays = args[1];
 
-                if (numDays > 100) {
+                if (!Number.isInteger(parseFloat(numDays)) && !isNaN(numDays))
+                    return message.channel.send(`<@${message.author.id}> - Number of days must be a valid integer.`);
+                else if (numDays > 100) 
                     return message.channel.send(`<@${message.author.id}> - I can only display data from up to the past 100 days.`);
-                }
+                else if (numDays < 2) 
+                    return message.channel.send(`<@${message.author.id}> - The number of days specified must be at least 2.`);
                 else {
                     let getCountryHistoricRecoveries = async () => {
                         let response = await axios.get("https://corona.lmao.ninja/v2/historical/" + countryName + "?lastdays=" + numDays).catch(err =>{
@@ -172,10 +196,9 @@ module.exports = {
     
                     return message.channel.send(historicRecoveriesEmbed);
                 }                
-            }
-        }
-        else {
+            } else 
+                return message.channel.send(`<@${message.author.id}> - Command syntax is ` + "```" + "!recovered [historic/hs] [number of days] [name of country]" + "```");
+        } else 
             return message.channel.send(`<@${message.author.id}> - Please enter a valid argument. Type !covhelp for help with commands.`);
-        }
     }
 }
