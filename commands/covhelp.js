@@ -37,7 +37,21 @@ module.exports = {
                 return message.channel.send(deathHelpEmbed);
             }
             else if (args[0] === "recovered"){
-                // do something else
+                const recoveredHelpEmbed = new Discord.MessageEmbed()
+                .setTitle("!recovered Help")
+                .setColor("#990000")
+                .addFields(
+                    { name: "```" + "!recovered" + "```", value: 'Returns total number of COVID-19 case recoveries globally' },
+                    { name: "```" + "!recovered [today/td]" + "```", value: 'Returns total number of COVID-19 case recoveries today globally' },
+                    { name: "```" + "!recovered [today/td] [country name]" + "```", value: 'Returns total number of COVID-19 case recoveries today in specified country'},
+                    { name: "```" + "!recovered [yesterday/ytd]" + "```", value: 'Returns total number of COVID-19 case recoveries yesterday globally' },
+                    { name: "```" + "!recovered [yesterday/ytd] [country name]" + "```", value: 'Returns total number of COVID-19 case recoveries yesterday in specified country'},
+                    { name: "```" + "!recovered [historic/hs]" + "```", value: 'Returns graph of historical recovery numbers for the past 30 days globally' },
+                    { name: "```" + "!recovered [historic/hs] [number of days]" + "```", value: 'Returns graph of historical recovery numbers for the past [number of days] globally'},
+                    { name: "```" + "!recovered [historic/hs] [number of days] [country name]" + "```", value: 'Returns graph of historical recovery numbers for the past [number of days] in specified country'}
+                    );
+
+                return message.channel.send(deathHelpEmbed);
             }
             else if (args[0] === "cases"){
                 // do something
