@@ -1,5 +1,4 @@
 const Discord = require("discord.js");
-const axios = require("axios");
 const client = new Discord.Client();
 const config = require("./config.json");
 const { readdirSync } = require('fs');
@@ -31,6 +30,9 @@ client.on("message", async message => {
     }
     else if (command === "recovered") {
         client.commands.get("recovered").execute(message, args);
+    }
+    else if (command === "cases") {
+        client.commands.get("cases").execute(message, args);
     }
     else if (command === "leaderboard") {
         client.commands.get("leaderboard").execute(message, args);

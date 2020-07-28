@@ -12,7 +12,7 @@ module.exports = {
                 return recovered = response.data;
             }
             let totalRecovered = await getTotalRecovered();
-            return message.channel.send(`Globally, ${totalRecovered["recovered"]} people have recovered from COVID-19.`);
+            return message.channel.send(`Globally, ${numberWithCommas(totalRecovered["recovered"])} people have recovered from COVID-19.`);
         }
         // Data for TODAY
         else if (args[0] === "today" || args[0] === "td"){
@@ -23,7 +23,7 @@ module.exports = {
                     return data = response.data;
                 }
                 let todayRecovered = await getTodayRecovered();
-                return message.channel.send(`Today, ${todayRecovered["todayRecovered"]} people have recovered from COVID-19.`);
+                return message.channel.send(`Today, ${numberWithCommas(todayRecovered["todayRecovered"])} people have recovered from COVID-19.`);
             }
             // Country-specific recovered cases TODAY
             else if (args.length >= 2){
@@ -40,7 +40,7 @@ module.exports = {
 
                 let todayRecoveredCountry = await getTodayRecoveredCountry();
                 console.log(todayRecoveredCountry);
-                return message.channel.send(`Today, ${todayRecoveredCountry["todayRecovered"]} people have recovered from COVID-19 in ${todayRecoveredCountry["country"]}.`);
+                return message.channel.send(`Today, ${numberWithCommas(todayRecoveredCountry["todayRecovered"])} people have recovered from COVID-19 in ${todayRecoveredCountry["country"]}.`);
             }
         }
         // Data for YESTERDAY
@@ -54,7 +54,7 @@ module.exports = {
                 let totalYTDRecovered = await getYTDRecovered();
                 
                 console.log(totalYTDRecovered["todayRecovered"]);
-                message.channel.send(`Yesterday, ${totalYTDRecovered["todayRecovered"]} people recovered from COVID-19.`);
+                message.channel.send(`Yesterday, ${numberWithCommas(totalYTDRecovered["todayRecovered"])} people recovered from COVID-19.`);
             }
             // Country-specific recovered YESTERDAY
             else if (args.length >= 2) {
@@ -71,7 +71,7 @@ module.exports = {
                 let totalYTDCountryRecovered = await getYTDCountryRecovered();
                 
                 console.log(totalYTDCountryRecovered["todayRecovered"]);
-                message.channel.send(`Yesterday, ${totalYTDCountryRecovered["todayRecovered"]} people recovered from COVID-19 in ${totalYTDCountryRecovered["country"]}.`);
+                message.channel.send(`Yesterday, ${numberWithCommas(totalYTDCountryRecovered["todayRecovered"])} people recovered from COVID-19 in ${totalYTDCountryRecovered["country"]}.`);
             }
             else {
                 return message.channel.send(`<@${message.author.id}> - Invalid arguments. Please type !covhelp for help with commands.`);
@@ -201,4 +201,9 @@ module.exports = {
         } else 
             return message.channel.send(`<@${message.author.id}> - Please enter a valid argument. Type !covhelp for help with commands.`);
     }
+}
+
+// Helper function that adds commas to large numbers using REGEX
+let numberWithCommas = (x) => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
