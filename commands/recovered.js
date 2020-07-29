@@ -14,9 +14,9 @@ module.exports = {
             let totalRecovered = await getTotalRecovered();
             return message.channel.send(`Globally, ${numberWithCommas(totalRecovered["recovered"])} people have recovered from COVID-19.`);
         }
-        // Data for TODAY
+        // Recoveries TODAY
         else if (args[0] === "today" || args[0] === "td"){
-            // Globally recovered cases TODAY
+            // New global recoveries TODAY
             if (args.length == 1) {
                 let getTodayRecovered = async () => {
                     let response = await axios.get("https://corona.lmao.ninja/v2/all?yesterday=false");
@@ -25,7 +25,7 @@ module.exports = {
                 let todayRecovered = await getTodayRecovered();
                 return message.channel.send(`Today, ${numberWithCommas(todayRecovered["todayRecovered"])} people have recovered from COVID-19.`);
             }
-            // Country-specific recovered cases TODAY
+            // Country-specific recoveries TODAY
             else if (args.length >= 2){
                 let country = args.slice(1).join(" ");
 
@@ -37,13 +37,11 @@ module.exports = {
                     });
                     return data = response.data;
                 }
-
                 let todayRecoveredCountry = await getTodayRecoveredCountry();
-                console.log(todayRecoveredCountry);
                 return message.channel.send(`Today, ${numberWithCommas(todayRecoveredCountry["todayRecovered"])} people have recovered from COVID-19 in ${todayRecoveredCountry["country"]}.`);
             }
         }
-        // Data for YESTERDAY
+        // Recoveries YESTERDAY
         else if (args[0] === "yesterday" || args[0] === "ytd") {
             // Global recovered cases YESTERDAY
             if (args.length == 1) {
@@ -52,11 +50,9 @@ module.exports = {
                     return data = response.data;
                 }
                 let totalYTDRecovered = await getYTDRecovered();
-                
-                console.log(totalYTDRecovered["todayRecovered"]);
                 message.channel.send(`Yesterday, ${numberWithCommas(totalYTDRecovered["todayRecovered"])} people recovered from COVID-19.`);
             }
-            // Country-specific recovered YESTERDAY
+            // Country-specific recovered cases YESTERDAY
             else if (args.length >= 2) {
                 let country = args.slice(1).join(" ");
 
@@ -69,35 +65,29 @@ module.exports = {
                     return data = response.data;
                 }
                 let totalYTDCountryRecovered = await getYTDCountryRecovered();
-                
-                console.log(totalYTDCountryRecovered["todayRecovered"]);
                 message.channel.send(`Yesterday, ${numberWithCommas(totalYTDCountryRecovered["todayRecovered"])} people recovered from COVID-19 in ${totalYTDCountryRecovered["country"]}.`);
             }
             else {
                 return message.channel.send(`<@${message.author.id}> - Invalid arguments. Please type !covhelp for help with commands.`);
             }
         }
-        // Data HISTORICALLY (This argument returns a GRAPH)
+        // HISTORIC Recoveries (Sends a graph)
         else if (args[0] === "historic" || args[0] === "hs") {
-            // No specification on how far back the data goes (Simply 30 days)
+            // No specified number of days (defaulted to 30)
             if (args.length == 1) {
+                let xAxisLabels = [];
+                let recoveryData = [];
 
                 let getHistoricRecoveries = async () => {
                     let response = await axios.get("https://corona.lmao.ninja/v2/historical/all");
                     return data = response.data;
                 }
                 let historicRecoveries = await getHistoricRecoveries();
-
-                let xAxisLabels = [];
-                let recoveryData = [];
-
                 // Format x-axis labels and compile data to be used on graph
                 for (day in historicRecoveries["recovered"]){
                     xAxisLabels.push("\"" + day + "\"");
                     recoveryData.push((historicRecoveries["recovered"][`${day}`]));
                 }
-                console.log(xAxisLabels);
-
                 // Create a new embedded message for the bot to display the historic recoveries
                 const historicRecoveriesEmbed = new Discord.MessageEmbed()
                     .setColor("#990000")
@@ -108,9 +98,6 @@ module.exports = {
             }
             // Global recoveries historically for a specified number of days
             else if (args.length == 2 && typeof(parseFloat(args[1])) === 'number') {
-                //let countryName = args.slice(1).join(" ");
-                //console.log(countryName);
-
                 let numDays = args[1];
 
                 // Input validation - the number of days must be an integer between 2 and 100, inclusive
@@ -121,6 +108,8 @@ module.exports = {
                 else if (numDays < 2)
                     return message.channel.send(`<@${message.author.id}> - The number of days specified must be at least 2.`);
                 else {
+                    let dayRecoveryData = [];
+                    let xAxisLabels = [];
 
                     let getDayHistoricRecoveries = async () => {
                         let response = await axios.get("https://corona.lmao.ninja/v2/historical/all?lastdays=" + numDays).catch(err =>{
@@ -131,23 +120,11 @@ module.exports = {
                         return data = response.data;
                     }
                     let historicDayRecoveries = await getDayHistoricRecoveries();
-                    
-                    let dayRecoveryData = [];
-                    let xAxisLabels = [];
-
-                    // // Format x-axis labels and compile data to be used on graph
-                    // for (day in historicCountryRecoveries["timeline"]["recovered"]){
-                    //     xAxisLabels.push("\"" + day + "\"");
-                    //     countryRecoveryData.push(historicCountryRecoveries["timeline"]["recovered"][`${day}`])
-                    //     console.log(countryRecoveryData);
-                    // }
-
                     // Format x-axis labels and compile data to be used on graph
                     for (day in historicDayRecoveries["recovered"]){
                         xAxisLabels.push("\"" + day + "\"");
                         dayRecoveryData.push(historicDayRecoveries["recovered"][`${day}`])
                     }
-                    
                     // Create a new embedded message for the bot to display the Country-specific historic recoveries
                     const historicRecoveredEmbed = new Discord.MessageEmbed()
                         .setColor("#990000")
@@ -169,6 +146,9 @@ module.exports = {
                 else if (numDays < 2) 
                     return message.channel.send(`<@${message.author.id}> - The number of days specified must be at least 2.`);
                 else {
+                    let countryRecoveryData = [];
+                    let xAxisLabels = [];
+
                     let getCountryHistoricRecoveries = async () => {
                         let response = await axios.get("https://corona.lmao.ninja/v2/historical/" + countryName + "?lastdays=" + numDays).catch(err =>{
                             if (err.response){
@@ -178,16 +158,11 @@ module.exports = {
                         return data = response.data;
                     }
                     let historicCountryRecoveries = await getCountryHistoricRecoveries();
-                    
-                    let countryRecoveryData = [];
-                    let xAxisLabels = [];
-    
                     // Format x-axis labels and compile data to be used on graph
                     for (day in historicCountryRecoveries["timeline"]["recovered"]){
                         xAxisLabels.push("\"" + day + "\"");
                         countryRecoveryData.push(historicCountryRecoveries["timeline"]["recovered"][`${day}`])
-                    }
-                    
+                    }        
                     // Create a new embedded message for the bot to display the Country-specific historic deaths
                     const historicRecoveriesEmbed = new Discord.MessageEmbed()
                         .setColor("#990000")
@@ -202,7 +177,6 @@ module.exports = {
             return message.channel.send(`<@${message.author.id}> - Please enter a valid argument. Type !covhelp for help with commands.`);
     }
 }
-
 // Helper function that adds commas to large numbers using REGEX
 let numberWithCommas = (x) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
