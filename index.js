@@ -1,3 +1,4 @@
+require('dotenv').config();
 const Discord = require("discord.js");
 const client = new Discord.Client();
 const config = require("./config.json");
@@ -42,6 +43,4 @@ client.on("message", async message => {
     }
 });
 
-// Login to Discord using the app's token
-// DON'T BE LIKE ME AND PUSH THIS WITH YOUR TOKEN IN IT LOL
-client.login(config.token);
+client.login();

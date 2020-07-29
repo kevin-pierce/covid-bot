@@ -1,20 +1,22 @@
 {
   "name": "covid-19-bot",
   "version": "1.0.0",
-  "description": "",
+  "description": "A bot that provides daily-updated information on various COVID-19-related figures.",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "engines": {
+    "node": "13.7.0",
+    "npm": "6.13.6"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "author": "Kevin Pierce",
+  "license": "none",
   "dependencies": {
     "axios": "^0.19.2",
-    "caller-id": "^0.1.0",
     "chart.js": "^2.9.3",
     "discord.js": "^12.2.0",
-    "moment": "^2.27.0",
+    "dotenv": "^8.2.0",
     "novelcovid": "^1.2.7"
   }
 }
