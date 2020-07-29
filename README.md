@@ -1,8 +1,8 @@
 # COVID-Bot
-A bot that provides real-time, daily-updated data regarding COVID-19-related cases, deaths, and recoveries. Data is retrieved from John Hopkins University (Updated every 10 minutes) from the [NovelCOVID API](https://documenter.getpostman.com/view/11144369/Szf6Z9B3?version=latest#intro).
+A bot that provides real-time, daily-updated data regarding COVID-19-related cases, deaths, and recoveries. Data is retrieved from John Hopkins University (Updated every 10 minutes) through the [NovelCOVID API](https://documenter.getpostman.com/view/11144369/Szf6Z9B3?version=latest#intro).
 
 ## Invite to Server
-You can add COVID-Bot through the invite link [here](https://discord.com/oauth2/authorize?client_id=705488136737914991&scope=bot).
+You can add COVID-Bot to your server through the invite link [here](https://discord.com/oauth2/authorize?client_id=705488136737914991&scope=bot).
 
 ## Commands
 - ```!cases [country name]```: Provides data regarding total cases globally or in a specified country
@@ -19,8 +19,8 @@ You can add COVID-Bot through the invite link [here](https://discord.com/oauth2/
 
 - ```!leaderboard```: Sends a list of the top 10 countries leading in number of COVID-19 cases, recoveries, and deaths
 
--```!covhelp```: Lists all available commands
--```!covhelp [command name]```: Provides details into the syntax of a specified command
+- ```!covhelp```: Lists all available commands
+- ```!covhelp [command name]```: Provides details into the syntax of a specified command
 
 ## Author
 Kevin Pierce
