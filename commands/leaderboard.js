@@ -5,9 +5,7 @@ module.exports = {
     name: "leaderboard",
     description: "Provides a top-10 ranking for each Country in each respective category",
     async execute(message, args){
-
         if (!args.length){
-
             let leadingDeaths = [];
             let leadingRecoveries = [];
             let leadingCases = [];
@@ -42,7 +40,6 @@ module.exports = {
         }
     }
 }
-
 // Compile each value line shown in the Field
 let formatData = (arr, typeStr) => {
     let msg = ``;

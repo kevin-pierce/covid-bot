@@ -19,7 +19,7 @@ client.on("ready", () =>{
 });
 
 client.on("message", async message => {
-    // Do nothing if the message does not start with the command prefix, or the bot is sending the message
+    // Do nothing if the message does not start with the command prefix, or if a bot is sending a message
     if (!message.content.startsWith(config.prefix) || message.author.bot) return;
     // Isolate command and args
     const args = message.content.toLowerCase().slice(config.prefix.length).split(/ +/);
@@ -37,7 +37,7 @@ client.on("message", async message => {
     else if (command === "leaderboard") {
         client.commands.get("leaderboard").execute(message, args);
     }
-    else if (command === "covhelp"){
+    else if (command === "covhelp") {
         client.commands.get("covhelp").execute(message, args);
     }
 });
