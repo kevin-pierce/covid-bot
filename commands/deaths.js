@@ -94,7 +94,7 @@ module.exports = {
                 const historicDeathEmbed = new Discord.MessageEmbed()
                     .setColor("#990000")
                     .setTitle("Historic Deaths for the Past 30 Days Globally")
-                    .setImage(`https://quickchart.io/chart?w=500&h=350&bkg="white"&c={type:'line',data:{labels:[${xAxisLabels}],datasets:[{label:'Deaths',data:[${deathData}],fill:false,borderColor:"rgb(178,34,34)",pointBackgroundColor:"rgb(178,34,34)"}]},options:{legend:{labels:{fontColor:"black",fontSize:18}},scales:{yAxes:[{ticks:{fontColor:"black",beginAtZero:false,fontSize:16}}],xAxes:[{ticks:{fontColor:"black",fontSize:16}}]}}}`)
+                    .setImage(`https://quickchart.io/chart?w=500&h=350&c={type:'line',data:{labels:[${xAxisLabels}],datasets:[{label:'Deaths',data:[${deathData}],fill:true,backgroundColor:"rgba(178,34,34,0.4)",borderColor:"rgb(178,34,34)",pointBackgroundColor:"rgb(178,34,34)"}]},options:{legend:{labels:{fontColor:"white",fontSize:18}},scales:{yAxes:[{ticks:{fontColor:"white",beginAtZero:false,fontSize:16}}],xAxes:[{ticks:{fontColor:"white",fontSize:16}}]}}}`)
 
                 return message.channel.send(historicDeathEmbed);
             }
@@ -131,7 +131,7 @@ module.exports = {
                     const historicDeathEmbed = new Discord.MessageEmbed()
                         .setColor("#990000")
                         .setTitle(`Historic Deaths for the Past ${numDays} Days Globally`)
-                        .setImage(`https://quickchart.io/chart?w=500&h=350&bkg="white"&c={type:'line',data:{labels:[${xAxisLabels}],datasets:[{label:'Deaths',data:[${dayDeathData}],fill:false,borderColor:"rgb(178,34,34)",pointBackgroundColor:"rgb(178,34,34)"}]},options:{legend:{labels:{fontColor:"black",fontSize:18}},scales:{yAxes:[{ticks:{fontColor:"black",beginAtZero:false,fontSize:16}}],xAxes:[{ticks:{fontColor:"black",fontSize:16}}]}}}`)
+                        .setImage(`https://quickchart.io/chart?w=500&h=350&c={type:'line',data:{labels:[${xAxisLabels}],datasets:[{label:'Deaths',data:[${dayDeathData}],fill:true,backgroundColor:"rgba(178,34,34,0.4)",borderColor:"rgb(178,34,34)",pointBackgroundColor:"rgb(178,34,34)"}]},options:{legend:{labels:{fontColor:"white",fontSize:18}},scales:{yAxes:[{ticks:{fontColor:"white",beginAtZero:false,fontSize:16}}],xAxes:[{ticks:{fontColor:"white",fontSize:16}}]}}}`)
 
                     return message.channel.send(historicDeathEmbed);
                 }
@@ -170,7 +170,7 @@ module.exports = {
                     const historicDeathEmbed = new Discord.MessageEmbed()
                         .setColor("#990000")
                         .setTitle(`Historic Deaths for the Past ${numDays} Days in ${historicCountryDeaths["country"]}`)
-                        .setImage(`https://quickchart.io/chart?w=500&h=350&bkg="white"&c={type:'line',data:{labels:[${xAxisLabels}],datasets:[{label:'Deaths',data:[${countryDeathData}],fill:false,borderColor:"rgb(178,34,34)",pointBackgroundColor:"rgb(178,34,34)"}]},options:{legend:{labels:{fontColor:"black",fontSize:18}},scales:{yAxes:[{ticks:{fontColor:"black",beginAtZero:false,fontSize:16}}],xAxes:[{ticks:{fontColor:"black",fontSize:16}}]}}}`)
+                        .setImage(`https://quickchart.io/chart?w=500&h=350&c={type:'line',data:{labels:[${xAxisLabels}],datasets:[{label:'Deaths',data:[${countryDeathData}],fill:true,backgroundColor:"rgba(178,34,34,0.4)",borderColor:"rgb(178,34,34)",pointBackgroundColor:"rgb(178,34,34)"}]},options:{legend:{labels:{fontColor:"white",fontSize:18}},scales:{yAxes:[{ticks:{fontColor:"white",beginAtZero:false,fontSize:16}}],xAxes:[{ticks:{fontColor:"white",fontSize:16}}]}}}`)
 
                     return message.channel.send(historicDeathEmbed);
                 } 

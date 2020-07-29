@@ -93,7 +93,7 @@ module.exports = {
                 const historicCasesEmbed = new Discord.MessageEmbed()
                     .setColor("#990000")
                     .setTitle("Daily Cases for the Past 30 Days Globally")
-                    .setImage(`https://quickchart.io/chart?width=500&height=350&c={type:'line',data:{labels:[${xAxisLabels}],datasets:[{label:'Cases',data:[${casesData}],fill:false,borderColor:"rgb(255,160,122)",pointBackgroundColor:"rgb(255,160,122)"}]},options:{legend:{labels:{fontColor:"white",fontSize:18}},scales:{yAxes:[{ticks:{fontColor:"white",beginAtZero:false,fontSize:16}}],xAxes:[{ticks:{fontColor:"white",fontSize:16}}]}}}`)
+                    .setImage(`https://quickchart.io/chart?w=500&h=350&c={type:'line',data:{labels:[${xAxisLabels}],datasets:[{label:'Cases',data:[${casesData}],fill:true,backgroundColor:"rgba(255,160,122,0.4)",borderColor:"rgb(255,160,122)",pointBackgroundColor:"rgb(255,160,122)"}]},options:{legend:{labels:{fontColor:"white",fontSize:18}},scales:{yAxes:[{ticks:{fontColor:"white",beginAtZero:false,fontSize:16}}],xAxes:[{ticks:{fontColor:"white",fontSize:16}}]}}}`)
 
                 return message.channel.send(historicCasesEmbed);
             }
@@ -130,7 +130,7 @@ module.exports = {
                     const historicCasesEmbed = new Discord.MessageEmbed()
                         .setColor("#990000")
                         .setTitle(`Daily Cases Trend for the Past ${numDays} Days Globally`)
-                        .setImage(`https://quickchart.io/chart?width=500&height=350&c={type:'line',data:{labels:[${xAxisLabels}],datasets:[{label:'Cases',data:[${dayCasesData}],fill:false,borderColor:"rgb(255,160,122)",pointBackgroundColor:"rgb(255,160,122)"}]},options:{legend:{labels:{fontColor:"white",fontSize:18}},scales:{yAxes:[{ticks:{fontColor:"white",beginAtZero:false,fontSize:16}}],xAxes:[{ticks:{fontColor:"white",fontSize:16}}]}}}`)
+                        .setImage(`https://quickchart.io/chart?w=500&h=350&c={type:'line',data:{labels:[${xAxisLabels}],datasets:[{label:'Cases',data:[${dayCasesData}],fill:true,backgroundColor:"rgba(255,160,122,0.4)",borderColor:"rgb(255,160,122)",pointBackgroundColor:"rgb(255,160,122)"}]},options:{legend:{labels:{fontColor:"white",fontSize:18}},scales:{yAxes:[{ticks:{fontColor:"white",beginAtZero:false,fontSize:16}}],xAxes:[{ticks:{fontColor:"white",fontSize:16}}]}}}`)
 
                     return message.channel.send(historicCasesEmbed);
                 }
@@ -169,7 +169,7 @@ module.exports = {
                     const historicCasesEmbed = new Discord.MessageEmbed()
                         .setColor("#990000")
                         .setTitle(`Daily Cases for the Past ${numDays} Days in ${historicCountryCases["country"]}`)
-                        .setImage(`https://quickchart.io/chart?width=500&height=350&c={type:'line',data:{labels:[${xAxisLabels}],datasets:[{label:'Cases',data:[${countryCasesData}],fill:false,borderColor:"rgb(255,160,122)",pointBackgroundColor:"rgb(255,160,122)"}]},options:{legend:{labels:{fontColor:"white",fontSize:18}},scales:{yAxes:[{ticks:{fontColor:"white",beginAtZero:false,fontSize:16}}],xAxes:[{ticks:{fontColor:"white",fontSize:16}}]}}}`)
+                        .setImage(`https://quickchart.io/chart?w=500&h=350&c={type:'line',data:{labels:[${xAxisLabels}],datasets:[{label:'Cases',data:[${countryCasesData}],fill:true,backgroundColor:"rgba(255,160,122,0.4)",borderColor:"rgb(255,160,122)",pointBackgroundColor:"rgb(255,160,122)"}]},options:{legend:{labels:{fontColor:"white",fontSize:18}},scales:{yAxes:[{ticks:{fontColor:"white",beginAtZero:false,fontSize:16}}],xAxes:[{ticks:{fontColor:"white",fontSize:16}}]}}}`)
 
                     return message.channel.send(historicCasesEmbed);
                 } 
