@@ -13,7 +13,13 @@ module.exports = {
                 return cases;
             }
             let totalCases = await getTotalCases();
-            return message.channel.send(`Globally, there have been ${numberWithCommas(totalCases["cases"])} cases of COVID-19.`);
+
+            const casesEmbed = new Discord.MessageEmbed()
+                .setColor("#990000")
+                .setTitle(`Globally, there have been ${numberWithCommas(totalCases["cases"])} cases of COVID-19.`)
+                .setFooter(`Last updated at ${new Date(totalCases["updated"]).toUTCString()}`);
+
+            return message.channel.send(casesEmbed);
         }
         // Cases TODAY
         else if ((args[0] === "today" || args[0] === "td")) {
@@ -24,7 +30,13 @@ module.exports = {
                     return data = response.data;
                 }
                 let todayCases = await getTodayCases();
-                message.channel.send(`Today, there are ${numberWithCommas(todayCases["todayCases"])} new cases of COVID-19.`);
+
+                const casesEmbed = new Discord.MessageEmbed()
+                    .setColor("#990000")
+                    .setTitle(`Today, there are ${numberWithCommas(todayCases["todayCases"])} new cases of COVID-19.`)
+                    .setFooter(`Last updated at ${new Date(todayCases["updated"]).toUTCString()}`);
+
+                return message.channel.send(casesEmbed);
             }
             // Country-specific new cases TODAY
             else if (args.length >= 2) {
@@ -39,7 +51,13 @@ module.exports = {
                     return data = response.data;
                 }
                 let todayCountryCases = await getTodayCountryCases();
-                message.channel.send(`Today, there are ${numberWithCommas(todayCountryCases["todayCases"])} new cases of COVID-19 in ${todayCountryCases["country"]}.`);
+
+                const casesEmbed = new Discord.MessageEmbed()
+                    .setColor("#990000")
+                    .setTitle(`Today, there are ${numberWithCommas(todayCountryCases["todayCases"])} new cases of COVID-19 in ${todayCountryCases["country"]}.`)
+                    .setFooter(`Last updated at ${new Date(todayCountryCases["updated"]).toUTCString()}`);
+
+                return message.channel.send(casesEmbed);
             }
         }
         // Cases YESTERDAY
@@ -51,7 +69,13 @@ module.exports = {
                     return cases = response.data;
                 }
                 let yesterdayCases = await getYesterdayCases();
-                message.channel.send(`Yesterday, there were ${numberWithCommas(yesterdayCases["todayCases"])} new cases of COVID-19.`);
+
+                const casesEmbed = new Discord.MessageEmbed()
+                    .setColor("#990000")
+                    .setTitle(`Yesterday, there were ${numberWithCommas(yesterdayCases["todayCases"])} new cases of COVID-19.`)
+                    .setFooter(`Last updated at ${new Date(yesterdayCases["updated"]).toUTCString()}`);
+
+                return message.channel.send(casesEmbed);
             }
             // New country-specific cases YESTERDAY
             else if (args.length >= 2) {
@@ -66,7 +90,13 @@ module.exports = {
                     return cases = response.data;
                 }
                 let yesterdayCountryCases = await getYesterdayCountryCases();
-                message.channel.send(`Yesterday, there were ${numberWithCommas(yesterdayCountryCases["todayCases"])} new cases of COVID-19 in ${yesterdayCountryCases["country"]}.`);
+
+                const casesEmbed = new Discord.MessageEmbed()
+                    .setColor("#990000")
+                    .setTitle(`Yesterday, there were ${numberWithCommas(yesterdayCountryCases["todayCases"])} new cases of COVID-19 in ${yesterdayCountryCases["country"]}.`)
+                    .setFooter(`Last updated at ${new Date(yesterdayCountryCases["updated"]).toUTCString()}`);
+
+                return message.channel.send(casesEmbed);
             }
             else {
                 return message.channel.send(`<@${message.author.id}> - Invalid arguments. Please type !covhelp for help with commands.`);

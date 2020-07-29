@@ -13,7 +13,13 @@ module.exports = {
                 return deaths;
             }
             let totalDeaths = await getTotalDeaths();
-            return message.channel.send(`Globally, ${numberWithCommas(totalDeaths["deaths"])} people have died due to COVID-19.`);
+
+            const deathsEmbed = new Discord.MessageEmbed()
+                    .setColor("#990000")
+                    .setTitle(`Globally, ${numberWithCommas(totalDeaths["deaths"])} people have died due to COVID-19.`)
+                    .setFooter(`Last updated at ${new Date(totalDeaths["updated"]).toUTCString()}`);
+
+            return message.channel.send(deathsEmbed);
         }
         // Deaths TODAY
         else if ((args[0] === "today" || args[0] === "td")) {
@@ -25,7 +31,13 @@ module.exports = {
                     return deaths;
                 }
                 let info = await getDeaths();
-                message.channel.send(`Today, ${numberWithCommas(info["todayDeaths"])} people have died due to COVID-19.`);
+
+                const deathsEmbed = new Discord.MessageEmbed()
+                    .setColor("#990000")
+                    .setTitle(`Today, ${numberWithCommas(info["todayDeaths"])} people have died due to COVID-19.`)
+                    .setFooter(`Last updated at ${new Date(info["updated"]).toUTCString()}`);
+
+                return message.channel.send(deathsEmbed);
             }
             // Country-specific deaths TODAY
             else if (args.length >= 2) {
@@ -40,7 +52,13 @@ module.exports = {
                     return deaths = response.data;
                 }
                 let info = await getDeaths();
-                message.channel.send(`Today, ${numberWithCommas(info["todayDeaths"])} people have died due to COVID-19 in ${info["country"]}.`);
+
+                const deathsEmbed = new Discord.MessageEmbed()
+                    .setColor("#990000")
+                    .setTitle(`Today, ${numberWithCommas(info["todayDeaths"])} people have died due to COVID-19 in ${info["country"]}.`)
+                    .setFooter(`Last updated at ${new Date(info["updated"]).toUTCString()}`);
+
+                return message.channel.send(deathsEmbed);
             }
         }
         // Deaths YESTERDAY
@@ -52,7 +70,13 @@ module.exports = {
                     return deaths = response.data;
                 }
                 let info = await getDeaths();
-                message.channel.send(`Yesterday, ${numberWithCommas(info["todayDeaths"])} people died due to COVID-19.`);
+
+                const deathsEmbed = new Discord.MessageEmbed()
+                    .setColor("#990000")
+                    .setTitle(`Yesterday, ${numberWithCommas(info["todayDeaths"])} people died due to COVID-19.`)
+                    .setFooter(`Last updated at ${new Date(info["updated"]).toUTCString()}`);
+
+                return message.channel.send(deathsEmbed);
             }
             // Country-specific deaths YESTERDAY
             else if (args.length >= 2) {
@@ -67,7 +91,13 @@ module.exports = {
                     return deaths = response.data;
                 }
                 let info = await getDeaths();
-                message.channel.send(`Yesterday, ${numberWithCommas(info["todayDeaths"])} people died due to COVID-19 in ${info["country"]}.`);
+
+                const deathsEmbed = new Discord.MessageEmbed()
+                    .setColor("#990000")
+                    .setTitle(`Yesterday, ${numberWithCommas(info["todayDeaths"])} people died due to COVID-19 in ${info["country"]}.`)
+                    .setFooter(`Last updated at ${new Date(info["updated"]).toUTCString()}`);
+
+                return message.channel.send(deathsEmbed);
             }
             else {
                 return message.channel.send(`<@${message.author.id}> - Invalid arguments. Please type !covhelp for help with commands.`);

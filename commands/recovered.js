@@ -12,7 +12,13 @@ module.exports = {
                 return recovered = response.data;
             }
             let totalRecovered = await getTotalRecovered();
-            return message.channel.send(`Globally, ${numberWithCommas(totalRecovered["recovered"])} people have recovered from COVID-19.`);
+
+            const recoveredEmbed = new Discord.MessageEmbed()
+                    .setColor("#990000")
+                    .setTitle(`Globally, ${numberWithCommas(totalRecovered["recovered"])} people have recovered from COVID-19.`)
+                    .setFooter(`Last updated at ${new Date(totalRecovered["updated"]).toUTCString()}`);
+
+            return message.channel.send(recoveredEmbed);
         }
         // Recoveries TODAY
         else if (args[0] === "today" || args[0] === "td"){
@@ -23,7 +29,13 @@ module.exports = {
                     return data = response.data;
                 }
                 let todayRecovered = await getTodayRecovered();
-                return message.channel.send(`Today, ${numberWithCommas(todayRecovered["todayRecovered"])} people have recovered from COVID-19.`);
+
+                const recoveredEmbed = new Discord.MessageEmbed()
+                    .setColor("#990000")
+                    .setTitle(`Today, ${numberWithCommas(todayRecovered["todayRecovered"])} people have recovered from COVID-19.`)
+                    .setFooter(`Last updated at ${new Date(todayRecovered["updated"]).toUTCString()}`);
+                
+                return message.channel.send(recoveredEmbed);
             }
             // Country-specific recoveries TODAY
             else if (args.length >= 2){
@@ -38,7 +50,13 @@ module.exports = {
                     return data = response.data;
                 }
                 let todayRecoveredCountry = await getTodayRecoveredCountry();
-                return message.channel.send(`Today, ${numberWithCommas(todayRecoveredCountry["todayRecovered"])} people have recovered from COVID-19 in ${todayRecoveredCountry["country"]}.`);
+
+                const recoveredEmbed = new Discord.MessageEmbed()
+                    .setColor("#990000")
+                    .setTitle(`Today, ${numberWithCommas(todayRecoveredCountry["todayRecovered"])} people have recovered from COVID-19 in ${todayRecoveredCountry["country"]}.`)
+                    .setFooter(`Last updated at ${new Date(todayRecoveredCountry["updated"]).toUTCString()}`);
+
+                return message.channel.send(recoveredEmbed);
             }
         }
         // Recoveries YESTERDAY
@@ -50,7 +68,13 @@ module.exports = {
                     return data = response.data;
                 }
                 let totalYTDRecovered = await getYTDRecovered();
-                message.channel.send(`Yesterday, ${numberWithCommas(totalYTDRecovered["todayRecovered"])} people recovered from COVID-19.`);
+
+                const recoveredEmbed = new Discord.MessageEmbed()
+                    .setColor("#990000")
+                    .setTitle(`Yesterday, ${numberWithCommas(totalYTDRecovered["todayRecovered"])} people recovered from COVID-19.`)
+                    .setFooter(`Last updated at ${new Date(totalYTDRecovered["updated"]).toUTCString()}`);
+
+                return message.channel.send(recoveredEmbed);
             }
             // Country-specific recovered cases YESTERDAY
             else if (args.length >= 2) {
@@ -65,7 +89,13 @@ module.exports = {
                     return data = response.data;
                 }
                 let totalYTDCountryRecovered = await getYTDCountryRecovered();
-                message.channel.send(`Yesterday, ${numberWithCommas(totalYTDCountryRecovered["todayRecovered"])} people recovered from COVID-19 in ${totalYTDCountryRecovered["country"]}.`);
+
+                const recoveredEmbed = new Discord.MessageEmbed()
+                    .setColor("#990000")
+                    .setTitle(`Yesterday, ${numberWithCommas(totalYTDCountryRecovered["todayRecovered"])} people recovered from COVID-19 in ${totalYTDCountryRecovered["country"]}.`)
+                    .setFooter(`Last updated at ${new Date(totalYTDCountryRecovered["updated"]).toUTCString()}`);
+
+                return message.channel.send(recoveredEmbed);
             }
             else {
                 return message.channel.send(`<@${message.author.id}> - Invalid arguments. Please type !covhelp for help with commands.`);

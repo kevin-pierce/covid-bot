@@ -16,6 +16,7 @@ module.exports = {
                 return data;
             }
             let countryData = await getCovData();
+            console.log(countryData);
 
             // Only take the top ~20 countries data for each comparison
             for (country in countryData){
@@ -34,7 +35,8 @@ module.exports = {
                 .setTitle("Global COVID-19 Stats")
                 .addField("Most Cases", formatData(leadingCases, "cases"), true)
                 .addField("Most Deaths", formatData(leadingDeaths, "deaths"), true)
-                .addField("Most Recoveries", formatData(leadingRecoveries, "recovered"), true);
+                .addField("Most Recoveries", formatData(leadingRecoveries, "recovered"), true)
+                .setFooter(`Last updated at ${new Date(countryData[115]["updated"]).toUTCString()}`);
 
             return message.channel.send(leadingEmbed);
         }
