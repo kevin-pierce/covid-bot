@@ -9,7 +9,7 @@ You can add COVID-Bot to your server through the invite link [here](https://disc
 - ```!cases [today / yesterday] [country name]```: Provides data regarding cases today or yesterday either globally, or in a specified country
 - ```!cases [historic] [number of days] [country name]```: Sends a graph of historic case numbers, going back a specified number of days (Defaulted to 30) for a specified country (Defaulted to globally)
 
-- ```!deaths [country name]```: Provides data regarding total death cases globally or in a specified country
+- ```!deaths```: Provides data regarding total death cases globally or in a specified country
 - ```!deaths [today / yesterday] [country name]```: Provides data regarding death cases today or yesterday either globally, or in a specified country
 - ```!deaths [historic] [number of days] [country name]```: Sends a graph of historic death data, going back a specified number of days (Defaulted to 30) for a specified country (Defaulted to globally)
 
