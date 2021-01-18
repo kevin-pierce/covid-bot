@@ -1,7 +1,7 @@
 # COVID-Bot
 A bot that provides real-time, daily-updated data regarding COVID-19-related cases, deaths, and recoveries. Data is retrieved from John Hopkins University (Updated every 10 minutes) through the [NovelCOVID API](https://documenter.getpostman.com/view/11144369/Szf6Z9B3?version=latest#intro).
 
-![Screenshot](assets/covidBotSS)
+![Screenshot](assets/covidBotSS.png)
 
 ## Invite to Server
 You can add COVID-Bot to your server through the invite link [here](https://discord.com/oauth2/authorize?client_id=705488136737914991&scope=bot).
