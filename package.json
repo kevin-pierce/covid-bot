@@ -14,7 +14,7 @@
   "license": "none",
   "dependencies": {
     "axios": "^0.19.2",
-    "chart.js": "^2.9.3",
+    "chart.js": "^2.9.4",
     "discord.js": "^12.2.0",
     "dotenv": "^8.2.0",
     "novelcovid": "^1.2.7"
